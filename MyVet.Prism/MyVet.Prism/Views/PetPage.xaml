@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="MyVet.Prism.Views.PetPage"
+             BackgroundColor="Silver"
+         	Title="{Binding Title}">
+
+    <StackLayout
+    	Padding="10">
+        <Frame
+        	CornerRadius="20"
+        	HasShadow="True">
+            <StackLayout>
+                <StackLayout
+                	Orientation="Horizontal">
+                    <Image
+                    	WidthRequest="180"
+                    	Source="{Binding Pet.ImageUrl}"/>
+                    <StackLayout>
+                        <Label
+                        	FontAttributes="Bold"
+                        	FontSize="Large"
+                        	Text="{Binding Pet.Name}"/>
+                        <Label
+                        	Text="{Binding Pet.Race, StringFormat='Race: {0}'}"/>
+                        <Label
+                        	Text="{Binding Pet.Born, StringFormat='Born: {0:yyyy/MM/dd}'}"/>
+                        <Label
+                        	Text="{Binding Pet.PetType, StringFormat='Type: {0}'}"/>
+                    </StackLayout>
+                </StackLayout>
+                <Label
+                	BackgroundColor="White"
+                	Text="{Binding Pet.Remarks}"/>
+            </StackLayout>
+        </Frame>
+        <Label
+        	FontAttributes="Bold"
+        	FontSize="Large"
+        	Text="History"
+        	TextColor="Black"/>
+        <ListView
+        	HasUnevenRows="True"
+        	IsRefreshing="{Binding IsRefreshing}"
+        	ItemsSource="{Binding Histories}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectHistoryCommand}"/>
+                            </Grid.GestureRecognizers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
+                            	Grid.Column="0"
+                            	Text="{Binding Date, StringFormat='{0:yyyy/MM/dd}'}"
+                            	VerticalOptions="Center"/>
+                            <Label
+                            	Grid.Column="1"
+                            	Text="{Binding ServiceType}"
+                            	VerticalOptions="Center"/>
+                            <Label
+                            	Grid.Column="2"
+                            	Text="{Binding Description}"
+                            	VerticalOptions="Center"/>
+                            <Image
+                            	Grid.Column="3"
+                            	HeightRequest="20"
+                            	Margin="0,5"
+                            	Source="ic_chevron_right"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

@@ -34,7 +34,11 @@ namespace MyVet.Web.Data.Entities
         //TODO: replace the correct URL for the image
         public string ImageFullPath => string.IsNullOrEmpty(ImageUrl)
             ? null
-            : $"https://myvet.bdlconsultores.com.ar{ImageUrl.Substring(1)}";
+            : $"http://myvet.bdlconsultores.com.ar{ImageUrl.Substring(1)}";
+
+        //public string ImageFullPath => string.IsNullOrEmpty(ImageUrl)
+        //    ? null
+        //    : $"https://myvet.bdlconsultores.com.ar{ImageUrl.Substring(1)}";
 
         [Display(Name = "Born")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}")]
