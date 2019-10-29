@@ -8,30 +8,32 @@
              BackgroundColor="Silver"
          	 Title="{Binding Title}">
 
-    <StackLayout
+    <ScrollView>
+        <StackLayout
     	Padding="10">
-        <ListView
+            <ListView
         	BackgroundColor="Transparent"
         	SeparatorVisibility="None"
         	HasUnevenRows="True"
         	ItemsSource="{Binding Pets}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Frame
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame
                         	CornerRadius="10"
                         	HasShadow="True"
                         	Margin="0,0,0,5">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SelectPetCommand}"/>
-                            </Frame.GestureRecognizers>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <ffimageloading:CachedImage
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectPetCommand}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ffimageloading:CachedImage
                                 	Grid.Column="0"
                                 	Source="{Binding ImageUrl}"
                                 	LoadingPlaceholder= "LoaderImage"
@@ -41,55 +43,65 @@
                                 	RetryDelay= "600"
                                 	DownsampleToViewSize = "true"
                                 	WidthRequest="100"/>
-                                <!--<Image
+                                    <!--<Image
                                     Grid.Column="0"
                                 	Source="{Binding ImageUrl}"
                                     WidthRequest="100"/>-->
-                                <Grid
+                                    <Grid
                                 	Grid.Column="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label
                                     	Grid.Column="0"
                                     	Grid.Row="0"
                                     	Text="Name"/>
-                                    <Label
+                                        <Label
                                     	Grid.Column="1"
                                     	Grid.Row="0"
                                     	FontAttributes="Bold"
                                     	Text="{Binding Name}"/>
-                                    <Label
+                                        <Label
                                     	Grid.Column="0"
                                     	Grid.Row="1"
                                     	Text="Race"/>
-                                    <Label
+                                        <Label
                                     	Grid.Column="1"
                                     	Grid.Row="1"
                                     	FontAttributes="Bold"
                                     	Text="{Binding Race}"/>
-                                    <Label
+                                        <Label
                                     	Grid.Column="0"
                                     	Grid.Row="2"
                                     	Text="Born"/>
-                                    <Label
+                                        <Label
                                     	Grid.Column="1"
                                     	Grid.Row="2"
                                     	FontAttributes="Bold"
                                     	Text="{Binding Born, StringFormat='{0:yyyy/MM/dd}'}"/>
-                                </Grid>
-                                <Image
+                                    </Grid>
+                                    <Image
                                     Grid.Column="2"
                                 	Source="ic_chevron_right">
-                                </Image>
-                            </Grid>
-                        </Frame>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
-
+                                    </Image>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ScrollView>
 
 </ContentPage>
