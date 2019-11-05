@@ -10,7 +10,7 @@ namespace MyVet.Web.Data.Entities
         [Display(Name = "Date")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd H:mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
         public Owner Owner { get; set; }
@@ -23,7 +23,7 @@ namespace MyVet.Web.Data.Entities
         public bool IsAvailable { get; set; }
 
         [Display(Name = "Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd H:mm tt}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DateLocal => Date.ToLocalTime();
     }
 }

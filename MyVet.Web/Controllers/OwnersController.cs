@@ -22,19 +22,22 @@ namespace MyVet.Web.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IConverterHelper _converterHelper;
         private readonly IImageHelper _imageHelper;
+        private readonly IMailHelper _mailHelper;
 
         public OwnersController(
             DataContext context, 
             IUserHelper userHelper,
             ICombosHelper combosHelper,
             IConverterHelper converterHelper,
-            IImageHelper imageHelper)
+            IImageHelper imageHelper,
+            IMailHelper mailHelper)
         {
             _context = context;
             _userHelper = userHelper;
             _combosHelper = combosHelper;
             _converterHelper = converterHelper;
             _imageHelper = imageHelper;
+            _mailHelper = mailHelper;
         }
 
         public IActionResult Index()
@@ -73,15 +76,15 @@ namespace MyVet.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AddUserViewModel view)
+        public async Task<IActionResult> Create(AddUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await AddUser(view);
+                var user = await AddUser(model);
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "This email is already used.");
-                    return View(view);
+                    return View(model);
                 }
 
                 var owner = new Owner
@@ -94,16 +97,28 @@ namespace MyVet.Web.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
+
+                    var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                    var tokenLink = Url.Action("ConfirmEmail", "Account", new
+                    {
+                        userid = user.Id,
+                        token = myToken
+                    }, protocol: HttpContext.Request.Scheme);
+
+                    _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                        $"To allow the user, " +
+                        $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.ToString());
-                    return View(view);
+                    return View(model);
                 }
             }
 
-            return View(view);
+            return View(model);
         }
 
         private async Task<User> AddUser(AddUserViewModel view)
